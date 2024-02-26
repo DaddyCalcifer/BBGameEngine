@@ -1,18 +1,15 @@
 package com.example.gameengine.Models;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Size {
 
-    @XmlElement
+    @XmlAttribute(name = "height")
     private double _h;
 
-    @XmlElement
+    @XmlAttribute(name = "width")
     private double _w;
 
     public Size() {

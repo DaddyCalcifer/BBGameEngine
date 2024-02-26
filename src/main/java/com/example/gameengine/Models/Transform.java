@@ -2,40 +2,80 @@ package com.example.gameengine.Models;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Transform extends Component {
-
+    //@XmlTransient
+    protected boolean drawFill = true;
     @XmlElement
     public Vector2 Position;
 
     @XmlElement
-    public Size size;
+    public Size Size;
 
     @XmlElement
-    public float RotationAngle;
+    public double RotationAngle;
 
-    public Transform(GameObject go) {
-        super(go);
+    public Transform(GameObject gameObject) {
+        super(gameObject);
         Position = new Vector2();
-        size = new Size();
+        Size = new Size();
+    }
+    public boolean collidesWith(Transform other) {
+        double thisLeft = this.Position.getX();
+        double thisRight = this.Position.getX() + this.Size.getWidth();
+        double thisTop = this.Position.getY();
+        double thisBottom = this.Position.getY() + this.Size.getHeight();
+
+        double otherLeft = other.Position.getX();
+        double otherRight = other.Position.getX() + other.Size.getWidth();
+        double otherTop = other.Position.getY();
+        double otherBottom = other.Position.getY() + other.Size.getHeight();
+
+        return thisLeft < otherRight && thisRight > otherLeft &&
+                thisTop < otherBottom && thisBottom > otherTop;
+    }
+    public Transform() {
+        super(new GameObject()); // или другой способ инициализации по умолчанию
     }
 
     public void draw(Pane canvas) {
-        if (_go.children.size() != 0) {
-            for (var ch : _go.children) {
-                ch.transform.draw(canvas);
+        if(isEnable && isVisible) {
+            ImageView obj_ = new ImageView();
+            Rectangle rectangle = new Rectangle();
+            Rotate rotate = new Rotate();
+            rotate.setPivotX(Position.getX());
+            rotate.setPivotY(Position.getY());
+            rotate.setAngle(gameObject.getParent().transform.RotationAngle + this.RotationAngle);
+            if (gameObject.Texture != null) {
+                System.out.println("img ");
+                obj_.setImage(gameObject.Texture);
+                obj_.setX(gameObject.getParent().transform.Position.getX() + this.Position.getX());
+                obj_.setY(gameObject.getParent().transform.Position.getY() + this.Position.getY());
+                obj_.setFitHeight(gameObject.transform.Size.getHeight());
+                obj_.setFitWidth(gameObject.transform.Size.getWidth());
+                obj_.setRotate(gameObject.getParent().transform.RotationAngle + RotationAngle);
+                canvas.getChildren().add(obj_);
+            } else if (drawFill) {
+                rectangle.setX(gameObject.getParent().transform.Position.getX() + this.Position.getX());
+                rectangle.setY(gameObject.getParent().transform.Position.getY() + this.Position.getY());
+                rectangle.setHeight(Size.getHeight());
+                rectangle.setWidth(Size.getWidth());
+                rectangle.setFill(gameObject.color);
+                rectangle.setRotate(gameObject.getParent().transform.RotationAngle + RotationAngle);
+                canvas.getChildren().add(rectangle);
+            }
+            if (gameObject.getChildren().size() != 0) {
+                for (var ch : gameObject.getChildren()) {
+                    ch.transform.draw(canvas);
+                }
             }
         }
-        ImageView obj_ = new ImageView();
-        obj_.setImage(_go.Texture);
-        obj_.setX(_go.getParent().transform.Position.getX() + this.Position.getX());
-        obj_.setY(_go.getParent().transform.Position.getY() + this.Position.getY());
-        obj_.resize(this.size.getWidth(), this.size.getHeight());
-        obj_.setRotate(_go.getParent().transform.RotationAngle + this.RotationAngle);
     }
 
     @Override

@@ -13,22 +13,30 @@ import java.util.Timer;
 public class RenderEngine {
     Pane frame;
 
+    private int intervalInMillis() {
+        if(currentScene != null)
+            return (int)(1000/currentScene.getFramerate());
+        else return 32;
+    }
+    double deltaTime()
+    {
+        return 1/intervalInMillis();
+    }
+
     Scene currentScene;
 
     public void setScene(Scene scene)
     {
         frame.getChildren().clear();
-        intervalInMillis = (int)(100/scene.getFramerate());
         currentScene = scene;
     }
     public Scene getScene() {
         return currentScene;
     }
-    private int intervalInMillis = 100;
     public RenderEngine(Pane canvas)
     {
         frame = canvas;
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(intervalInMillis), new EventHandler<ActionEvent>() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(intervalInMillis()), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 // Метод, который будет вызываться по истечении интервала
@@ -42,10 +50,15 @@ public class RenderEngine {
     public void RenderFrame()
     {
         frame.getChildren().clear();
-        currentScene.Background.transform.draw(frame);
-        currentScene.MainLayer.transform.draw(frame);
-        currentScene.Foreground.transform.draw(frame);
-        currentScene.UI.transform.draw(frame);
-        System.out.println("xd");
+        currentScene.getBackground().transform.draw(frame);
+        currentScene.getMainLayer().transform.draw(frame);
+        currentScene.getForeground().transform.draw(frame);
+        currentScene.getUI().transform.draw(frame);
+
+        for (var child : currentScene.getMainLayer().getChildren()) {
+            for (var comp : child.Components) {
+                comp.update();
+            }
+        }
     }
 }

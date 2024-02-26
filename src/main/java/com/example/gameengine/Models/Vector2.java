@@ -1,22 +1,29 @@
 package com.example.gameengine.Models;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
+//Сериализуем без ошибок
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Vector2 {
 
-    @XmlElement
+    @XmlAttribute(name = "x")
     private double _x;
 
-    @XmlElement
+    @XmlAttribute(name = "y")
     private double _y;
 
     public Vector2() {
         set(0, 0);
+    }
+    public void multiply(double scalar) {
+        _x *= scalar;
+        _y *= scalar;
+    }
+    public void plus(Vector2 vec)
+    {
+        setY(getY() + vec.getY());
+        setX(getX() + vec.getX());
     }
 
     public Vector2(double x, double y) {

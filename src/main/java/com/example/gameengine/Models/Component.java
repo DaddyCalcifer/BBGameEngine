@@ -1,25 +1,26 @@
 package com.example.gameengine.Models;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class Component {
-    @XmlElement
+    @XmlAttribute
     public boolean isEnable = true;
-    @XmlElement
-    protected GameObject _go;
-    public GameObject gameObject() { return _go;}
+    @XmlAttribute
+    protected boolean isVisible = true;
+    @XmlTransient
+    protected GameObject gameObject;
+    public GameObject gameObject() { return gameObject;}
     public abstract void start();
     public abstract void update();
     // Конструктор по умолчанию, необходимый для JAXB
     public Component() {
+        start();
     }
     public Component(GameObject gameObject)
     {
-        _go = gameObject;
+        this.gameObject = gameObject;
+        start();
     }
 }

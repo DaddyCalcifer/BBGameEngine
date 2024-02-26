@@ -14,12 +14,11 @@ public class SceneLayer extends GameObject {
     public SceneLayer() {
         super();
         this.transform.Position.set(0, 0);
-        this.transform.size.set(Properties.APP_WIDTH, Properties.APP_HEIGHT);
+        this.transform.Size.set(Properties.APP_WIDTH, Properties.APP_HEIGHT);
+        transform.drawFill = false;
     }
-
     // Метод, добавленный для сериализации
-    @XmlElement(name = "object")
     public void addObject(GameObject obj) {
-        children.add(obj);
+        getChildren().add(obj);
     }
 }
