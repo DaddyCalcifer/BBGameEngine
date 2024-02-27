@@ -52,9 +52,10 @@ public class HelloController implements EventHandler<KeyEvent> {
         test.getMainLayer().addObject(ground);
 
         Scene readed = FileManager.deserializeScene("test.scene");
+        test = readed.Extract(test);
 
-        renderEngine.setScene(readed);
-        FileManager.serializeScene(readed,"readed.scene");
+        renderEngine.setScene(test);
+        FileManager.serializeScene(test,"readed.scene");
     }
     @Override
     public void handle(KeyEvent e) {

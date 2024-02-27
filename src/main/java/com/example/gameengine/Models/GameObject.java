@@ -49,11 +49,36 @@ public class GameObject {
     @XmlTransient
     protected Image Texture;
     @XmlTransient
-    protected Color color = Color.BLUE;
+    protected Color color = Color.GREEN;
 
     public void setColor(Color clr)
     {
         color = clr;
+    }
+    protected String ColorARGB;
+    @XmlElement(name = "Color")
+    public void setColor(String hexARGB)
+    {
+        // Удаление префикса "0x", если он присутствует
+        hexARGB = hexARGB.replace("0x", "");
+
+        // Проверка на правильный формат hex-строки
+        if (!hexARGB.matches("[0-9A-Fa-f]+")) {
+            throw new IllegalArgumentException("Неверный формат hex-строки");
+        }
+
+        // Преобразование hex-строки в число
+        long value = Long.parseLong(hexARGB, 16);
+
+        // Извлечение компонентов ARGB
+        int alpha = (int) ((value & 0xFF000000) >>> 24);
+        int red = (int) ((value & 0x00FF0000) >>> 16);
+        int green = (int) ((value & 0x0000FF00) >>> 8);
+        int blue = (int) (value & 0x000000FF);
+
+        // Создание объекта Color
+        color = new Color(red, green, blue, alpha);
+        System.out.println("colored");
     }
     @XmlElement(name = "Color")
     public String getColorText()
