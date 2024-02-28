@@ -10,8 +10,9 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Transform extends Component {
-    //@XmlTransient
+    @XmlTransient
     protected boolean drawFill = true;
+    protected boolean isVisible = true;
     @XmlElement
     public Vector2 Position;
 
@@ -42,10 +43,13 @@ public class Transform extends Component {
     }
     public Transform() {
         super(new GameObject()); // или другой способ инициализации по умолчанию
+        Position = new Vector2();
+        Size = new Size();
     }
 
     public void draw(Pane canvas) {
         if(isEnable && isVisible) {
+            if(gameObject.getClass() != SceneLayer.class){
             ImageView obj_ = new ImageView();
             Rectangle rectangle = new Rectangle();
             Rotate rotate = new Rotate();
@@ -65,10 +69,11 @@ public class Transform extends Component {
                 rectangle.setY(gameObject.getParent().transform.Position.getY() + this.Position.getY());
                 rectangle.setHeight(Size.getHeight());
                 rectangle.setWidth(Size.getWidth());
-                rectangle.setFill(gameObject.color);
+                rectangle.setFill(gameObject.getColor().toColor());
                 rectangle.setRotate(gameObject.getParent().transform.RotationAngle + RotationAngle);
                 canvas.getChildren().add(rectangle);
             }
+        }
             if (gameObject.getChildren().size() != 0) {
                 for (var ch : gameObject.getChildren()) {
                     ch.transform.draw(canvas);
@@ -80,6 +85,13 @@ public class Transform extends Component {
     @Override
     public void start() {
         // Ваш код для инициализации
+    }
+    @Override
+    public void setGameObject(GameObject gameObject)
+    {
+        super.setGameObject(gameObject);
+        if(gameObject.ImageURL == null)
+            drawFill = true;
     }
 
     @Override

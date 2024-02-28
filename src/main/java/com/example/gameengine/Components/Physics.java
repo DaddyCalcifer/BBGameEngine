@@ -1,5 +1,6 @@
 package com.example.gameengine.Components;
 
+import com.example.gameengine.GameLogic.RenderEngine;
 import com.example.gameengine.Models.Component;
 import com.example.gameengine.Models.GameObject;
 import com.example.gameengine.Models.SceneLayer;
@@ -22,13 +23,14 @@ public class Physics extends Component {
     private double MASS = 2.0;
 
     public Physics() {
+        super();
         // Пустой конструктор для JAXB
     }
 
-    public Physics(GameObject obj, SceneLayer layer) {
+    public Physics(GameObject obj) {
         super(obj);
         super.component = this.getClass().toString();
-        this.layer = layer;
+        this.layer = RenderEngine.currentScene.getMainLayer();
     }
 
     public void start() {

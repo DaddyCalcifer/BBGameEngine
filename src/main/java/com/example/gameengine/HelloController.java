@@ -3,6 +3,7 @@ package com.example.gameengine;
 import com.example.gameengine.Components.Physics;
 import com.example.gameengine.Controllers.FileManager;
 import com.example.gameengine.GameLogic.RenderEngine;
+import com.example.gameengine.Models.ColorXML;
 import com.example.gameengine.Models.GameObject;
 import com.example.gameengine.Models.Scene;
 import javafx.event.EventHandler;
@@ -28,10 +29,10 @@ public class HelloController implements EventHandler<KeyEvent> {
         //testo = new GameObject("knight");
         //testo.transform.Size.set(100,200);
         //testo.transform.Position.set(500,300);
-        //testo.setColor(Color.LAVENDER);
+        //testo.setColor(new ColorXML(Color.LAVENDER));
         ////testo.transform.RotationAngle = 25;
         //testo.setImage(new File("C:\\Users\\Nikita\\IdeaProjects\\GameEngine\\src\\main\\resources\\com\\example\\gameengine\\i.png"));
-        //testo.getComponents().add(new Physics(testo,test.getMainLayer()));
+//
         //GameObject ground = new GameObject("ground");
         //ground.transform.Size.set(1280,50);
         //ground.transform.Position.set(0,700);
@@ -39,21 +40,19 @@ public class HelloController implements EventHandler<KeyEvent> {
         //testo2.transform.Size.set(50,25);
         //testo2.transform.Position.set(-10,-10);
         //testo2.transform.RotationAngle = 25;
-        //testo2.setColor(Color.GOLD);
-        //testo2.Components.add(new Physics(testo2,test.getMainLayer()));
-
-
+        //testo2.setColor(new ColorXML(Color.GOLD));
+//
+//
         //testo.addChildren(testo2);
         //test.getMainLayer().addObject(testo);
         //test.getMainLayer().addObject(ground);
 
         Scene readed = FileManager.deserializeScene("test.scene");
         test = readed.Extract(test);
-        System.out.println(test.getFramerate());
 
         renderEngine.setScene(test);
-        //FileManager.TestScriptLoader();
-        //FileManager.serializeScene(test,"readed.scene");
+        //testo.getComponents().add(new Physics(testo));
+        FileManager.serializeScene(test,"readed.scene");
     }
     @Override
     public void handle(KeyEvent e) {

@@ -16,9 +16,7 @@ public class Scene {
     @XmlElement
     private SceneLayer UI;
 
-    public Scene() {
-        // Пустой конструктор требуется для JAXB
-    }
+    public Scene() {}
 
     public Scene(int framerate) {
         this.SCENE_FRAMERATE = framerate;
@@ -74,6 +72,11 @@ public class Scene {
             this.setFramerate(120);
         extractTo = new Scene(this.getFramerate());
 
+        extractTo.getMainLayer().transform.setGameObject(this.getMainLayer());
+        extractTo.getBackground().transform.setGameObject(this.getBackground());
+        extractTo.getForeground().transform.setGameObject(this.getForeground());
+        extractTo.getUI().transform.setGameObject(this.getUI());
+
         extractTo.Background.transform.Position.set(this.Background.transform.Position.getX(),
                 this.Background.transform.Position.getY());
         extractTo.Background.transform.Size.set(this.Background.transform.Size.getWidth(),
@@ -81,7 +84,7 @@ public class Scene {
         extractTo.Background.transform.RotationAngle = this.Background.transform.RotationAngle;
         for (var obj:
              this.Background.getChildren()) {
-
+            obj.initialize(null, null);
             extractTo.Background.addObject(obj);
         }
 
@@ -103,6 +106,7 @@ public class Scene {
         extractTo.Foreground.transform.RotationAngle = this.Foreground.transform.RotationAngle;
         for (var obj:
                 this.Foreground.getChildren()) {
+            obj.initialize(null, null);
             extractTo.Foreground.addObject(obj);
         }
 
@@ -113,6 +117,7 @@ public class Scene {
         extractTo.UI.transform.RotationAngle = this.UI.transform.RotationAngle;
         for (var obj:
                 this.UI.getChildren()) {
+            obj.initialize(null, null);
             extractTo.UI.addObject(obj);
         }
 

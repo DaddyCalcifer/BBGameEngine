@@ -23,7 +23,7 @@ public class RenderEngine {
         return 1/intervalInMillis();
     }
 
-    Scene currentScene;
+    public static Scene currentScene;
 
     public void setScene(Scene scene)
     {

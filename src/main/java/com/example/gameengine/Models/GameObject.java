@@ -29,7 +29,6 @@ public class GameObject implements Initializable {
     @XmlElementWrapper(name = "components")
     @XmlElement(name = "component")
     public List<Component> getComponents() {
-        System.out.println("setter");
         return Components;
     }
 
@@ -43,7 +42,7 @@ public class GameObject implements Initializable {
     }
 
     @XmlElementWrapper(name = "children")
-    @XmlElement(name = "child")
+    @XmlElement(name = "GameObject")
     public List<GameObject> getChildren() {return children;}
 
     public void setChildren(List<GameObject> children)
@@ -51,7 +50,6 @@ public class GameObject implements Initializable {
         for (var ch: children) {
             ch.parent = this;
             this.children.add(ch);
-            System.out.println("children added");
         }
     }
     public void addChildren(GameObject child)
@@ -73,47 +71,14 @@ public class GameObject implements Initializable {
     }
     @XmlTransient
     protected Image Texture;
-    @XmlTransient
-    protected Color color = Color.GREEN;
-    @XmlTransient
-    public void setColor(Color clr)
-    {
-        color = clr;
-    }
-    protected String ColorARGB;
-    @XmlElement(name = "Color")
-    public void setColor(String hexARGB)
-    {
-        // Удаление префикса "0x", если он присутствует
-        hexARGB = hexARGB.replace("0x", "");
+    @XmlElement
+    private ColorXML color = new ColorXML(Color.GREEN);
 
-        // Проверка на правильный формат hex-строки
-        if (!hexARGB.matches("[0-9A-Fa-f]+")) {
-            throw new IllegalArgumentException("Неверный формат hex-строки");
-        }
-
-        // Преобразование hex-строки в число
-        long value = Long.parseLong(hexARGB, 16);
-
-        // Извлечение компонентов ARGB
-        int alpha = (int) ((value & 0xFF000000) >>> 24);
-        int red = (int) ((value & 0x00FF0000) >>> 16);
-        int green = (int) ((value & 0x0000FF00) >>> 8);
-        int blue = (int) (value & 0x000000FF);
-
-        // Создание объекта Color
-        color = new Color(red, green, blue, alpha);
-        System.out.println("colored");
-    }
-
-    public String getColor()
-    {
-        return color.toString();
-    }
+    public ColorXML getColor(){return color;}
+    public void setColor(ColorXML color) {this.color = color;}
     @XmlElement
     public Vector2 velocity;
 
-    // Конструктор по умолчанию, необходимый для JAXB
     GameObject() {
         if(velocity==null)
         velocity = new Vector2();
@@ -133,6 +98,8 @@ public class GameObject implements Initializable {
         Components = new ArrayList<Component>();
         children = new ArrayList<GameObject>();
         Texture = null;
+        if(this.getClass() != SceneLayer.class)
+        this.name = name;
     }
     @XmlTransient
     private GameObject parent;
@@ -152,11 +119,28 @@ public class GameObject implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println(name);
+        transform.setGameObject(this);
+        if(ImageURL != null)
+            setImage(ImageURL);
 
-        // Перемещение инициализации компонентов после цикла
         for (Component comp : Components) {
             comp.gameObject = this;
+
+            //Class<?> loadedClass = comp.deserializeComponent();
+            //if (loadedClass != null) {
+            //    try {
+            //        // Создание экземпляра класса, хранящегося в переменной типа Class
+            //        Object instance = loadedClass.getDeclaredConstructor().newInstance();
+            //        if (instance instanceof Component) {
+            //            Component componentInstance = (Component) instance;
+            //            Components.add(componentInstance);
+            //            componentInstance.setGameObject(this); // Устанавливаем ссылку на gameObject
+            //        }
+            //    } catch (Exception e) {
+            //        e.printStackTrace();
+            //    }
+            //}
+
             comp.start();
             System.out.println(comp.component);
         }
@@ -164,6 +148,7 @@ public class GameObject implements Initializable {
         {
             gobj.initialize(url, resourceBundle);
             gobj.parent = this;
+            if(this.getClass() != SceneLayer.class)
             System.out.println("parent:" + gobj.parent.name + " " + "child: " + gobj.name);
         }
     }

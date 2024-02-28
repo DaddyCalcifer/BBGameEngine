@@ -1,92 +1,106 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <scene sceneFRAMERATE="60">
     <Background>
-        <transform isEnable="true" isVisible="true">
-            <drawFill>false</drawFill>
+        <transform isEnable="true">
+            <isVisible>true</isVisible>
             <Position x="0.0" y="0.0"/>
             <Size height="720.0" width="1280.0"/>
             <RotationAngle>0.0</RotationAngle>
         </transform>
+        <color B="0.0" G="0.501960813999176" A="1.0" R="0.0"/>
         <velocity x="0.0" y="0.0"/>
-        <children/>
-        <Color>0x008000ff</Color>
+        <children>
+            <GameObject name="background">
+                <transform isEnable="true">
+                    <isVisible>true</isVisible>
+                    <Position x="0.0" y="0.0"/>
+                    <Size height="720.0" width="1280.0"/>
+                    <RotationAngle>0.0</RotationAngle>
+                </transform>
+                <ImageURL>textures\background.jpg</ImageURL>
+                <color B="1.0" G="1.0" A="1.0" R="1.0"/>
+                <velocity x="0.0" y="0.0"/>
+                <children/>
+                <components/>
+            </GameObject>
+        </children>
         <components/>
     </Background>
     <MainLayer>
-        <transform isEnable="true" isVisible="true">
-            <drawFill>false</drawFill>
+        <transform isEnable="true">
+            <isVisible>true</isVisible>
             <Position x="0.0" y="0.0"/>
             <Size height="720.0" width="1280.0"/>
             <RotationAngle>0.0</RotationAngle>
         </transform>
+        <color B="0.0" G="0.501960813999176" A="1.0" R="0.0"/>
         <velocity x="0.0" y="0.0"/>
         <children>
-            <child name="knight">
-                <transform isEnable="true" isVisible="true">
-                    <drawFill>true</drawFill>
+            <GameObject name="knight">
+                <transform isEnable="true">
+                    <isVisible>true</isVisible>
                     <Position x="500.0" y="300.0"/>
                     <Size height="200.0" width="100.0"/>
                     <RotationAngle>0.0</RotationAngle>
                 </transform>
-                <ImageURL>C:\Users\Nikita\IdeaProjects\GameEngine\src\main\resources\com\example\gameengine\i.png</ImageURL>
+                <ImageURL>textures\i.png</ImageURL>
+                <color B="0.9803921580314636" G="0.9019607901573181" A="1.0" R="0.9019607901573181"/>
                 <velocity x="0.0" y="1.0"/>
                 <children>
-                    <child name="knight child">
-                        <transform isEnable="true" isVisible="true">
-                            <drawFill>true</drawFill>
+                    <GameObject name="knight child">
+                        <transform isEnable="true">
+                            <isVisible>true</isVisible>
                             <Position x="-10.0" y="-10.0"/>
                             <Size height="25.0" width="50.0"/>
-                            <RotationAngle>45.0</RotationAngle>
+                            <RotationAngle>25.0</RotationAngle>
                         </transform>
+                        <color B="0.0" G="0.843137264251709" A="1.0" R="1.0"/>
                         <velocity x="0.0" y="0.0"/>
                         <children/>
-                        <Color>0x008000ff</Color>
                         <components/>
-                    </child>
+                    </GameObject>
                 </children>
-                <Color>0x008000ff</Color>
                 <components>
-                    <component isEnable="true" isVisible="true" component="class com.example.gameengine.Components.Physics"/>
+                    <component isEnable="true" component="class com.example.gameengine.Components.Physics"/>
                 </components>
-            </child>
-            <child name="ground">
-                <transform isEnable="true" isVisible="true">
-                    <drawFill>true</drawFill>
+            </GameObject>
+            <GameObject name="ground">
+                <transform isEnable="true">
+                    <isVisible>true</isVisible>
                     <Position x="0.0" y="700.0"/>
                     <Size height="50.0" width="1280.0"/>
                     <RotationAngle>0.0</RotationAngle>
                 </transform>
+                <color B="0.0" G="0.501960813999176" A="1.0" R="0.0"/>
                 <velocity x="0.0" y="0.0"/>
                 <children/>
-                <Color>0x008000ff</Color>
                 <components/>
-            </child>
+            </GameObject>
         </children>
-        <Color>0x008000ff</Color>
         <components/>
     </MainLayer>
     <Foreground>
-        <transform isEnable="true" isVisible="true">
-            <drawFill>false</drawFill>
+        <transform isEnable="true">
+            <isVisible>true</isVisible>
             <Position x="0.0" y="0.0"/>
             <Size height="720.0" width="1280.0"/>
             <RotationAngle>0.0</RotationAngle>
         </transform>
+        <color B="0.0" G="0.501960813999176" A="1.0" R="0.0"/>
         <velocity x="0.0" y="0.0"/>
         <children/>
-        <Color>0x008000ff</Color>
         <components/>
     </Foreground>
     <UI>
-        <transform isEnable="true" isVisible="true">
-            <drawFill>false</drawFill>
+        <transform isEnable="true">
+            <isVisible>true</isVisible>
             <Position x="0.0" y="0.0"/>
             <Size height="720.0" width="1280.0"/>
             <RotationAngle>0.0</RotationAngle>
         </transform>
+        <color B="0.0" G="0.501960813999176" A="1.0" R="0.0"/>
         <velocity x="0.0" y="0.0"/>
         <children/>
-        <Color>0x008000ff</Color>
         <components/>
     </UI>
 </scene>

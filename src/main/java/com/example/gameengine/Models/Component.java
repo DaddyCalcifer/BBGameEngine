@@ -7,8 +7,6 @@ import javax.xml.bind.annotation.*;
 public class Component implements IComponent {
     @XmlAttribute
     public boolean isEnable = true;
-    @XmlAttribute
-    protected boolean isVisible = true;
 
     @XmlAttribute
     protected String component;
@@ -24,7 +22,6 @@ public class Component implements IComponent {
         this.gameObject = gameObject;
     }
     public GameObject gameObject() { return gameObject;}
-    // Конструктор по умолчанию, необходимый для JAXB
     private boolean hasDefaultConstructor(Class<?> clazz) {
         try {
             clazz.getDeclaredConstructor();
@@ -35,7 +32,7 @@ public class Component implements IComponent {
     }
     public Component() {
     }
-    private Class<?> deserializeComponent() {
+    public Class<?> deserializeComponent() {
         try {
             return Class.forName(component);
         } catch (ClassNotFoundException e) {
