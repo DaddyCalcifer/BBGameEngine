@@ -3,6 +3,7 @@ package com.example.gameengine.Controllers;
 import com.example.gameengine.Models.*;
 import com.example.gameengine.Properties;
 import javafx.scene.control.Alert;
+import java.net.MalformedURLException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -10,6 +11,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 public class FileManager {
     public static PropertiesModel loadProp() {
@@ -199,5 +202,45 @@ public class FileManager {
             e.printStackTrace();
             return null;
         }
+    }
+    private static Class<?> loadClassFromExternalFile(String filePath) throws MalformedURLException, ClassNotFoundException {
+        File file = new File(filePath);
+        URL url = file.toURI().toURL();
+        URLClassLoader classLoader = new URLClassLoader(new URL[]{url});
+        String className = "test_sss"; // Замените на имя вашего класса
+        return Class.forName(className, true, classLoader);
+    }
+    public static void TestScriptLoader()
+    {
+        try {
+            // Загрузка внешнего класса
+            URLClassLoader classLoader = new URLClassLoader(new URL[]{new URL("file:C:\\Users\\Nikita\\IdeaProjects\\GameEngine\\target\\classes\\com\\example\\gameengine\\Components\\test_sss.class")});
+            Class<?> externalComponentClass = classLoader.loadClass("test_sss");
+
+            try {
+                // Создание экземпляра внешнего класса
+                Component externalComponent = (Component) externalComponentClass.getDeclaredConstructor().newInstance();
+                externalComponent.start();
+            } catch (Exception ex)
+            {
+                System.out.println("xd");
+            }
+        } catch (Exception ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        //try {
+        //    // Загрузка класса из внешнего файла
+        //    String externalClassPath = "C:\\Users\\Nikita\\Desktop\\scripts\\test_sss.class";
+        //    Class<?> externalClass = loadClassFromExternalFile(externalClassPath);
+//
+        //    // Создание экземпляра загруженного класса
+        //    Object instance = externalClass.getDeclaredConstructor().newInstance();
+//
+        //    // Пример вызова метода из загруженного класса
+        //    externalClass.getMethod("start").invoke(instance);
+        //} catch (Exception e) {
+        //    e.printStackTrace();
+        //}
     }
 }

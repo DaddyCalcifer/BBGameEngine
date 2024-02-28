@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class SceneLayer extends GameObject {
 
     public SceneLayer() {
-        super();
+        super("layer");
         this.transform.Position.set(0, 0);
         this.transform.Size.set(Properties.APP_WIDTH, Properties.APP_HEIGHT);
         transform.drawFill = false;

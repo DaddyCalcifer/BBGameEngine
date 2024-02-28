@@ -56,7 +56,7 @@ public class RenderEngine {
         currentScene.getUI().transform.draw(frame);
 
         for (var child : currentScene.getMainLayer().getChildren()) {
-            for (var comp : child.Components) {
+            for (var comp : child.getComponents()) {
                 comp.update();
             }
         }

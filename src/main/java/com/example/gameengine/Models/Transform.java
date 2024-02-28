@@ -53,7 +53,6 @@ public class Transform extends Component {
             rotate.setPivotY(Position.getY());
             rotate.setAngle(gameObject.getParent().transform.RotationAngle + this.RotationAngle);
             if (gameObject.Texture != null) {
-                System.out.println("img ");
                 obj_.setImage(gameObject.Texture);
                 obj_.setX(gameObject.getParent().transform.Position.getX() + this.Position.getX());
                 obj_.setY(gameObject.getParent().transform.Position.getY() + this.Position.getY());

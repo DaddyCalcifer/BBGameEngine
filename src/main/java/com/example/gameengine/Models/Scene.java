@@ -68,6 +68,10 @@ public class Scene {
     }
     public Scene Extract(Scene extractTo)
     {
+        if(this.getFramerate() < 1)
+            this.setFramerate(1);
+        if(this.getFramerate() > 120)
+            this.setFramerate(120);
         extractTo = new Scene(this.getFramerate());
 
         extractTo.Background.transform.Position.set(this.Background.transform.Position.getX(),
@@ -77,6 +81,7 @@ public class Scene {
         extractTo.Background.transform.RotationAngle = this.Background.transform.RotationAngle;
         for (var obj:
              this.Background.getChildren()) {
+
             extractTo.Background.addObject(obj);
         }
 
@@ -87,6 +92,7 @@ public class Scene {
         extractTo.MainLayer.transform.RotationAngle = this.MainLayer.transform.RotationAngle;
         for (var obj:
                 this.MainLayer.getChildren()) {
+            obj.initialize(null, null);
             extractTo.MainLayer.addObject(obj);
         }
 

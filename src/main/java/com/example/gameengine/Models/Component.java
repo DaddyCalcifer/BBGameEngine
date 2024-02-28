@@ -4,20 +4,46 @@ import javax.xml.bind.annotation.*;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public abstract class Component {
+public class Component implements IComponent {
     @XmlAttribute
     public boolean isEnable = true;
     @XmlAttribute
     protected boolean isVisible = true;
+
+    @XmlAttribute
+    protected String component;
+
+    public void start(){}
+    public void update(){}
+
     @XmlTransient
     protected GameObject gameObject;
-    public GameObject gameObject() { return gameObject;}
-    public abstract void start();
-    public abstract void update();
-    // Конструктор по умолчанию, необходимый для JAXB
-    public Component() {
-        start();
+
+    public void setGameObject(GameObject gameObject)
+    {
+        this.gameObject = gameObject;
     }
+    public GameObject gameObject() { return gameObject;}
+    // Конструктор по умолчанию, необходимый для JAXB
+    private boolean hasDefaultConstructor(Class<?> clazz) {
+        try {
+            clazz.getDeclaredConstructor();
+            return true;
+        } catch (NoSuchMethodException e) {
+            return false;
+        }
+    }
+    public Component() {
+    }
+    private Class<?> deserializeComponent() {
+        try {
+            return Class.forName(component);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public Component(GameObject gameObject)
     {
         this.gameObject = gameObject;

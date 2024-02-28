@@ -27,6 +27,7 @@ public class Physics extends Component {
 
     public Physics(GameObject obj, SceneLayer layer) {
         super(obj);
+        super.component = this.getClass().toString();
         this.layer = layer;
     }
 
