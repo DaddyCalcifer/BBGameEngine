@@ -81,7 +81,14 @@ public class Transform extends Component {
             }
         }
     }
-
+    public void set(Transform tran)
+    {
+        this.Position.set(tran.Position.getX(), tran.Position.getY());
+        this.Size.set(tran.Size.getWidth(), tran.Size.getHeight());
+        this.RotationAngle = tran.RotationAngle;
+        this.isVisible = tran.isVisible;
+        this.isEnable = tran.isEnable;
+    }
     @Override
     public void start() {
         // Ваш код для инициализации

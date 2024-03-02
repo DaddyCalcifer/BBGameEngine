@@ -69,6 +69,10 @@ public class GameObject implements Initializable {
             System.out.println(ex.getMessage());
         }
     }
+    public void setImage(Image image)
+    {
+        Texture = image;
+    }
     @XmlTransient
     protected Image Texture;
     @XmlElement
